@@ -1,0 +1,39 @@
+* {
+    margin: 0;
+    font-family: Arial;
+    border: border-box;              
+
+
+}
+
+nav .myname h4 {
+    font-size: 30px;
+}
+
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 30px;
+}
+
+
+
+nav ul {
+    display: flex;
+}
+
+nav ul li {
+    padding-left: 40px; 
+    list-style-type: none;
+    font-size: 20px;
+    font-weight: 500;
+
+}
+
+.mainpage{
+    height: 100vh;
+}
