@@ -68,9 +68,7 @@ h2 {
     cursor: pointer;
 }
 
-.btn:hover {
-    background-color: #0056b3;
-}
+
 
 /* Sign Up Link */
 .signup-link {
@@ -84,6 +82,4 @@ h2 {
     text-decoration: none;
 }
 
-.signup-link a:hover {
-    text-decoration: underline;
-}
+
