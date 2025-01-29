@@ -1,13 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 * {
     margin: 0;
-    font-family: Arial;
-    border: border-box;              
-
-
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;   /*then use rem for others*/
 }
-
-nav .myname h4 {
-    font-size: 30px;
+      /*changes to make nav bar fixed*/
+header {
+    padding: 20px;
+    background-color: #461959;
+    position: fixed; /* Fix the header to the viewport */    
+    top: 0; /* Keep it at the top */
+    left: 0; /* Align it to the left */
+    width: 100%; /* Make it span the entire width */
+    z-index: 1000; /* Ensure it appears above other elements */
 }
 
 
@@ -17,9 +24,8 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 30px;
+    background-color: #461959;
 }
-
 
 
 nav ul {
@@ -27,15 +33,151 @@ nav ul {
 }
 
 nav ul li {
-    padding-left: 40px; 
+    padding-left: 40px;
     list-style-type: none;
     font-size: 20px;
     font-weight: 500;
+    color: white;
+    cursor: pointer;
+    transition-duration: 0.7s;
 
 }
 
-.mainpage{
-    height: 100vh;
+nav ul li:hover{
+    color: #F86F03;
+    text-decoration: underline;
+
+}
+
+.website-name p{
+    font-weight: 700;
+    font-size: 25px;
+    color: white;
+}
+
+main{
+    background-color: #31065A;
+    height: 1000vh;
+    padding-top: 70px; /* Add padding equal to header height */
+}
+
+.box-center{
+    display: flex;
+
+}
+
+.box-left{
+    padding-left: 150px;
+    padding-top: 200px;
+    width: 40%;
+}
+
+.box-left h1{
+    font-size: 40px;
+
+    color: white
+}
+
+.box-left h2{
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #F86F03;
+}
+
+.box-left h3{
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: white;
+}
+
+.button{
+    display: flex;
+
+}
+
+button {
+    height: 50px;
+    width: 170px;
+    color: white;
+    background-color: #F86F03;
+    border-radius: 25px 25px 25px 25px; /* Top-left: 0, Top-right: 25px, Bottom-right: 25px, Bottom-left: 0 */
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    font-weight: bold;
+    
+   
+}
+
+button:hover {
+    background-color: #D95702;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+button:before {
+    content: '▶'; /* Adds a play icon before the button text */
+    margin-right: 5px;
+    color: #F86F03;
+}
+
+
+.button a {
+    font-size: 25px;
+    margin-right: 30px;
+    color: white;
+    margin-top: 5px;
+    margin-left: 10px;
+
+
+}
+
+.box-right {
     display: flex;
     justify-content: center;
+    align-items: center;
+}
+
+.box-right img{
+    border-radius: 100%;
+    position: relative;
+    top: 87px;
+    right: -103px;
+}
+ 
+
+@media (max-width: 768px) {
+    /* Make navigation stack vertically */
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    /* Center the image and details */
+    .box-center {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .box-left, .box-right {
+        width: 90%; /* Reduce width on smaller screens */
+    }
+
+    /* Adjust button and text sizes */
+    button {
+        width: 100%; /* Full width on smaller screens */
+        font-size: 18px;
+    }
+
+    .box-left h1 {
+        font-size: 1.8rem;
+    }
+
+    .box-left h2 {
+        font-size: 1.5rem;
+    }
 }
