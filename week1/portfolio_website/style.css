@@ -159,13 +159,44 @@ footer {
     color: white;
     margin-right: 63px;
     margin-top: 30px;
+    
+    
 
 }
 
 .footer-left h4 {
     font-size: 40px;
+    padding-bottom: 20px;
+}
+
+.footer-left ul li {
+    list-style-type: none;
+    padding-bottom: 20px;
 }
 
 footer .right {
     color: white;
+}
+
+.footer-right{
+    color: white;
+    margin-left: 63px;
+    margin-top: 30px;
+
+}
+
+.footer-right h4 {
+    font-size: 40px;
+    padding-bottom: 20px;
+}
+
+.footer-right p {
+    padding-bottom: 20px;
+}
+
+.footer-left ul li:hover{
+    color: #F86F03;
+    text-decoration: underline;
+    transition-delay: 5ms;
+
 }
