@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* General styles for the body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container settings */
+        .container {
+            margin: 20px;
+        }
+
+        /* Row styling */
+        .row {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        /* Column styling */
+        .col {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 1;
+        }
+
+        /* Wider column styling */
+        .col-6 {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 2;
+        }
+
+        .col-5 {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin: 5px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex: 1.5;
+        }
+
+        /* Styling for text */
+        .col h2 {
+            font-size: 18px;
+            color: #333;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col">
+                1 of 3
+            </div>
+            <div class="col-6">
+                2 of 3 (wider)
+            </div>
+            <div class="col">
+                3 of 3
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                1 of 3
+            </div>
+            <div class="col-5">
+                2 of 3 (wider)
+            </div>
+            <div class="col">
+                3 of 3
+            </div>
+        </div>
+    </div>
+</body>
+</html>
