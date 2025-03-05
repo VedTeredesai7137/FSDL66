@@ -1,10 +1,14 @@
 import React from 'react';
 
-function Filter({ setFilter }) {
+function Filter({ filter, setFilter }) {
   return (
     <div>
-      <label>Filter Tasks:</label>
-      <input type="text" onChange={(e) => setFilter(e.target.value)} />
+      <input
+        type="text"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+        placeholder="Search tasks"
+      />
     </div>
   );
 }
