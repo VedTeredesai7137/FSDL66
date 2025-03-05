@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import TaskList from './components/TaskList';
 import AddTask from './components/AddTask';
@@ -24,10 +24,10 @@ function App() {
       <div>
         <Header />
         <Filter setFilter={setFilter} />
-        <Switch>
-          <Route path="/add" render={(props) => <AddTask {...props} addTask={addTask} />} />
-          <Route path="/" render={() => <TaskList tasks={filteredTasks} deleteTask={deleteTask} />} />
-        </Switch>
+        <Routes>
+          <Route path="/add" element={<AddTask addTask={addTask} />} />
+          <Route path="/" element={<TaskList tasks={filteredTasks} deleteTask={deleteTask} />} />
+        </Routes>
       </div>
     </Router>
   );
