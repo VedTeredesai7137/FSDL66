@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-import { ItemListComponent } from './item-list/item-list.component';  // Import the ItemListComponent
-import { FormsModule } from '@angular/forms';  // Import FormsModule to use ngModel
+import { ItemListComponent } from './item-list.component';  // Import from the current directory
+import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel two-way binding
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ItemListComponent  // Declare the ItemListComponent here
+    AppComponent,  // Declare AppComponent here
+    ItemListComponent  // Declare ItemListComponent here
   ],
   imports: [
     BrowserModule,
-    FormsModule  // Include FormsModule for two-way binding
+    FormsModule  // Import FormsModule for ngModel
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent]  // This is the main component to bootstrap
 })
 export class AppModule { }
