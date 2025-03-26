@@ -1,0 +1,37 @@
+/* General body styling */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #f5f5f5;
+    font-family: Arial, sans-serif;
+}
+
+/* Search bar container */
+.search-container {
+    position: relative;
+}
+
+/* Search bar styling */
+.search-bar {
+    width: 200px;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #4CAF50;
+    border-radius: 25px;
+    outline: none;
+    transition: width 0.4s ease;
+}
+
+/* Search bar expansion on focus */
+.search-bar:focus {
+    width: 400px; /* Expands when clicked */
+    border-color: #2196F3; /* Changes border color */
+}
+
+/* Placeholder styling */
+.search-bar::placeholder {
+    color: #aaa;
+}
