@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Records App</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container" ng-controller="StudentController">
+        <h1>Student Records</h1>
+
+        <!-- Add Student Form -->
+        <form name="studentForm" ng-submit="addStudent()" novalidate>
+            <label>Student Name:</label>
+            <input type="text" ng-model="newStudent.name" name="name" required minlength="3">
+            <span class="error" ng-show="studentForm.name.$touched && studentForm.name.$invalid">
+                Name is required and should be at least 3 characters.
+            </span>
+
+            <label>Age:</label>
+            <input type="number" ng-model="newStudent.age" name="age" required min="10">
+            <span class="error" ng-show="studentForm.age.$touched && studentForm.age.$invalid">
+                Age is required and must be 10 or above.
+            </span>
+
+            <label>Course:</label>
+            <select ng-model="newStudent.course" name="course" required>
+                <option value="">Select Course</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Mathematics">Mathematics</option>
+                <option value="Physics">Physics</option>
+            </select>
+            <span class="error" ng-show="studentForm.course.$touched && studentForm.course.$invalid">
+                Course selection is required.
+            </span>
+
+            <button type="submit" ng-disabled="studentForm.$invalid">Add Student</button>
+        </form>
+
+        <!-- Student List -->
+        <h2>Student List</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+                <th>Actions</th>
+            </tr>
+            <tr ng-repeat="student in students">
+                <td>{{ student.name }}</td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.course }}</td>
+                <td>
+                    <button ng-click="editStudent(student)">Edit</button>
+                    <button ng-click="removeStudent(student)">Delete</button>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Edit Student Form -->
+        <div class="edit-container" ng-show="editMode">
+            <h2>Edit Student</h2>
+            <form name="editForm" ng-submit="updateStudent()" novalidate>
+                <label>Name:</label>
+                <input type="text" ng-model="selectedStudent.name" required minlength="3">
+
+                <label>Age:</label>
+                <input type="number" ng-model="selectedStudent.age" required min="10">
+
+                <label>Course:</label>
+                <select ng-model="selectedStudent.course" required>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Mathematics">Mathematics</option>
+                    <option value="Physics">Physics</option>
+                </select>
+
+                <button type="submit" ng-disabled="editForm.$invalid">Update</button>
+                <button type="button" ng-click="cancelEdit()">Cancel</button>
+            </form>
+        </div>
+
+    </div>
+
+</body>
+</html>
