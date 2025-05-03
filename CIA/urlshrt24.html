@@ -1,0 +1,175 @@
+Here is a simple **URL Shortener API** using **Node.js**, **Express**, and **MongoDB**. The API accepts a long URL, generates a short code, and stores the mapping in MongoDB.
+
+### Steps to Build the URL Shortener API
+
+1. **Initialize a Node.js Project**:
+
+   ```bash
+   mkdir url-shortener
+   cd url-shortener
+   npm init -y
+   ```
+
+2. **Install Dependencies**:
+
+   * Install **Express**, **Mongoose**, and **shortid** (to generate short codes).
+
+   ```bash
+   npm install express mongoose shortid body-parser
+   ```
+
+3. **Create the API file** (`index.js`):
+
+```javascript
+// index.js
+const express = require('express');
+const mongoose = require('mongoose');
+const shortid = require('shortid');
+const bodyParser = require('body-parser');
+
+// Initialize app
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+
+// MongoDB Connection URI (Replace with your MongoDB URI)
+const dbURI = 'mongodb://localhost:27017/urlshortener'; // For local MongoDB
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Define the URL schema
+const urlSchema = new mongoose.Schema({
+  longUrl: { type: String, required: true },
+  shortCode: { type: String, required: true, unique: true },
+});
+
+// Create a URL model
+const Url = mongoose.model('Url', urlSchema);
+
+// POST endpoint to create a short URL
+app.post('/api/shorten', async (req, res) => {
+  const { longUrl } = req.body;
+
+  // Validate the URL
+  if (!longUrl) {
+    return res.status(400).json({ message: 'URL is required.' });
+  }
+
+  try {
+    // Generate a unique short code
+    const shortCode = shortid.generate();
+
+    // Create and save the URL mapping
+    const newUrl = new Url({
+      longUrl,
+      shortCode,
+    });
+
+    await newUrl.save();
+    res.status(201).json({ shortUrl: `http://localhost:${port}/${shortCode}` });
+  } catch (err) {
+    res.status(500).json({ message: 'Error creating short URL', error: err });
+  }
+});
+
+// GET endpoint to redirect to the long URL
+app.get('/:shortCode', async (req, res) => {
+  const { shortCode } = req.params;
+
+  try {
+    // Find the URL by short code
+    const url = await Url.findOne({ shortCode });
+    if (!url) {
+      return res.status(404).json({ message: 'Short URL not found' });
+    }
+
+    // Redirect to the long URL
+    res.redirect(url.longUrl);
+  } catch (err) {
+    res.status(500).json({ message: 'Error retrieving URL', error: err });
+  }
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+```
+
+### Explanation:
+
+* **MongoDB Connection**: This code connects to a local MongoDB database (`urlshortener`) to store the URL mappings.
+* **Schema**: The `urlSchema` defines the structure of the document, with `longUrl` (the original URL) and `shortCode` (the shortened URL code).
+* **POST `/api/shorten`**: Accepts a long URL in the request body, generates a unique short code using `shortid`, and stores the mapping in MongoDB. The response includes the shortened URL.
+* **GET `/:shortCode`**: Redirects the user to the long URL associated with the given short code. If the short code is not found, it returns a 404 error.
+
+### How to Run:
+
+1. **MongoDB**: Ensure MongoDB is installed and running on your local machine or use a cloud service like MongoDB Atlas.
+
+   * To start MongoDB locally, run:
+
+     ```bash
+     mongod
+     ```
+
+2. **Run the server**:
+
+   ```bash
+   node index.js
+   ```
+
+3. **Test the API**:
+
+   * **POST `/api/shorten`**:
+
+     * Make a POST request to `http://localhost:3000/api/shorten` with a JSON body like:
+
+       ```json
+       {
+         "longUrl": "https://www.example.com"
+       }
+       ```
+     * The response will include the short URL:
+
+       ```json
+       {
+         "shortUrl": "http://localhost:3000/[shortCode]"
+       }
+       ```
+
+   * **GET `/:shortCode`**:
+
+     * Make a GET request to `http://localhost:3000/[shortCode]` to be redirected to the original long URL.
+
+### Example Flow:
+
+1. **POST** `/api/shorten` with long URL:
+
+   ```json
+   {
+     "longUrl": "https://www.example.com"
+   }
+   ```
+
+   Response:
+
+   ```json
+   {
+     "shortUrl": "http://localhost:3000/ABC123"
+   }
+   ```
+
+2. **GET** `/ABC123` (the short URL):
+
+   * You will be redirected to `https://www.example.com`.
+
+### Example Use:
+
+* **POST**: Create a short URL by sending a request with a long URL.
+* **GET**: Access the long URL by visiting the short URL.
+
+This is a very basic **URL Shortener API**. It can be extended with features like URL expiration, user authentication, or analytics for tracking usage of short links. Let me know if you want to extend it further!

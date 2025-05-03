@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .quiz-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .question {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .options button {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #f9f9f9;
+      transition: background-color 0.2s ease;
+    }
+
+    .options button:hover {
+      background-color: #f0f0f0;
+    }
+
+    .next-btn, .submit-btn {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    .next-btn:hover, .submit-btn:hover {
+      background-color: #218838;
+    }
+
+    .score {
+      margin-top: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h2>Quiz App</h2>
+    <div id="question-container">
+      <p class="question" id="question">Loading Question...</p>
+      <div class="options" id="options">
+        <!-- Answer options will go here -->
+      </div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next</button>
+    <button class="submit-btn" id="submit-btn" style="display: none;" onclick="submitQuiz()">Submit</button>
+    <p class="score" id="score" style="display: none;"></p>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "What is the capital of France?",
+        options: ["Berlin", "Madrid", "Paris", "Rome"],
+        correctAnswer: "Paris",
+      },
+      {
+        question: "What is 2 + 2?",
+        options: ["3", "4", "5", "6"],
+        correctAnswer: "4",
+      },
+      {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Jupiter", "Venus"],
+        correctAnswer: "Mars",
+      },
+      {
+        question: "Who wrote 'To Kill a Mockingbird'?",
+        options: ["Harper Lee", "Jane Austen", "J.K. Rowling", "Charles Dickens"],
+        correctAnswer: "Harper Lee",
+      },
+      {
+        question: "What is the largest ocean on Earth?",
+        options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+        correctAnswer: "Pacific Ocean",
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let selectedAnswer = "";
+
+    function loadQuestion() {
+      const question = questions[currentQuestionIndex];
+      document.getElementById("question").textContent = question.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+
+      question.options.forEach(option => {
+        const button = document.createElement("button");
+        button.textContent = option;
+        button.onclick = () => {
+          selectedAnswer = option;
+        };
+        optionsDiv.appendChild(button);
+      });
+      
+      if (currentQuestionIndex === questions.length - 1) {
+        document.getElementById("next-btn").style.display = "none";
+        document.getElementById("submit-btn").style.display = "inline-block";
+      }
+    }
+
+    function nextQuestion() {
+      const question = questions[currentQuestionIndex];
+      if (selectedAnswer === question.correctAnswer) {
+        score++;
+      }
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      }
+    }
+
+    function submitQuiz() {
+      const question = questions[currentQuestionIndex];
+      if (selectedAnswer === question.correctAnswer) {
+        score++;
+      }
+      document.getElementById("question-container").style.display = "none";
+      document.getElementById("next-btn").style.display = "none";
+      document.getElementById("submit-btn").style.display = "none";
+      document.getElementById("score").style.display = "block";
+      document.getElementById("score").textContent = `Your score is: ${score} / 5`;
+    }
+
+    // Initial load
+    loadQuestion();
+  </script>
+
+</body>
+</html>

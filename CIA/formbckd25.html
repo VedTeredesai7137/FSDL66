@@ -1,0 +1,154 @@
+Here is a simple **Contact Form Backend** using **Express** and **MongoDB**. The API saves contact form submissions with `name`, `email`, and `message` to MongoDB.
+
+### Steps to Build the Contact Form Backend
+
+1. **Initialize a Node.js Project**:
+
+   ```bash
+   mkdir contact-form
+   cd contact-form
+   npm init -y
+   ```
+
+2. **Install Dependencies**:
+
+   * Install **Express**, **Mongoose**, and **Body-Parser** to handle the incoming form data.
+
+   ```bash
+   npm install express mongoose body-parser
+   ```
+
+3. **Create the API file** (`index.js`):
+
+```javascript
+// index.js
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+
+// Initialize app
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON bodies
+app.use(bodyParser.json());
+
+// MongoDB Connection URI (Replace with your MongoDB URI)
+const dbURI = 'mongodb://localhost:27017/contactFormDB'; // Local MongoDB
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Define the Contact Schema
+const contactSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true },
+  message: { type: String, required: true },
+});
+
+// Create a Contact Model
+const Contact = mongoose.model('Contact', contactSchema);
+
+// POST endpoint to submit the contact form
+app.post('/api/contact', async (req, res) => {
+  const { name, email, message } = req.body;
+
+  // Validate input
+  if (!name || !email || !message) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    // Create a new contact submission
+    const newContact = new Contact({
+      name,
+      email,
+      message
+    });
+
+    // Save the contact submission to the database
+    await newContact.save();
+    res.status(201).json({ message: 'Message sent successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Error saving contact form', error: err });
+  }
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+```
+
+### Explanation:
+
+* **MongoDB Connection**: Connects to MongoDB using Mongoose to save contact form data in a `contactFormDB` database.
+* **Schema**: The `contactSchema` defines the structure of a contact form submission with fields for `name`, `email`, and `message`.
+* **POST `/api/contact`**: Accepts `name`, `email`, and `message` from the request body. If all required fields are present, it saves the submission in the database and returns a success message.
+
+### How to Run:
+
+1. **Ensure MongoDB is running** on your local machine or use MongoDB Atlas for a cloud-based database.
+
+   * To start MongoDB locally:
+
+     ```bash
+     mongod
+     ```
+
+2. **Run the server**:
+
+   ```bash
+   node index.js
+   ```
+
+3. **Test the API** with Postman or a similar tool:
+
+   * **POST** `/api/contact` with the following JSON body:
+
+     ```json
+     {
+       "name": "John Doe",
+       "email": "johndoe@example.com",
+       "message": "This is a sample message"
+     }
+     ```
+
+   * **Response**:
+
+     ```json
+     {
+       "message": "Message sent successfully"
+     }
+     ```
+
+### Example Flow:
+
+1. **POST Request**:
+
+   * Endpoint: `POST http://localhost:3000/api/contact`
+   * Request body:
+
+     ```json
+     {
+       "name": "Jane Smith",
+       "email": "janesmith@example.com",
+       "message": "Hello, I have a question about your services."
+     }
+     ```
+
+2. **Database**:
+
+   * The contact form data is saved in MongoDB as a new document in the `contacts` collection.
+
+3. **Response**:
+
+   * On success, the response will be:
+
+     ```json
+     {
+       "message": "Message sent successfully"
+     }
+     ```
+
+This is a simple **Contact Form Backend** where contact submissions are stored in MongoDB. You can extend it by adding email notifications, input validation, or other features depending on your use case. Let me know if you'd like further enhancements!

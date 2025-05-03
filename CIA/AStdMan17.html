@@ -1,0 +1,59 @@
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  studentName: string = '';
+  studentAge: number | null = null;
+  students: { name: string, age: number }[] = [];
+
+  addStudent() {
+    if (this.studentName && this.studentAge) {
+      this.students.push({ name: this.studentName, age: this.studentAge });
+      this.studentName = '';
+      this.studentAge = null;
+    }
+  }
+}
+<!-- app.component.html -->
+<div style="text-align: center; padding: 20px;">
+    <h1>Student Record Manager</h1>
+  
+    <!-- Input fields to add student -->
+    <input [(ngModel)]="studentName" placeholder="Student Name" style="padding: 10px; margin: 10px;"/>
+    <input [(ngModel)]="studentAge" type="number" placeholder="Student Age" style="padding: 10px; margin: 10px;"/>
+  
+    <!-- Button to add student -->
+    <button (click)="addStudent()" style="padding: 10px 20px; background-color: #28a745; color: white;">Add Student</button>
+  
+    <h2>Student List</h2>
+    <ul>
+      <li *ngFor="let student of students">
+        {{ student.name }} (Age: {{ student.age }})
+      </li>
+    </ul>
+  </div>
+  // app.module.ts
+  import { NgModule } from '@angular/core';
+  import { BrowserModule } from '@angular/platform-browser';
+  import { FormsModule } from '@angular/forms'; // Import FormsModule for two-way binding
+  
+  import { AppComponent } from './app.component';
+  
+  @NgModule({
+    declarations: [
+      AppComponent
+    ],
+    imports: [
+      BrowserModule,
+      FormsModule  // Required for ngModel two-way data binding
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+    

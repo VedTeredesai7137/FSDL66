@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Menu</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    body {
+      background-color: #fdfdfd;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-header {
+      background: linear-gradient(to right, #e74c3c, #c0392b);
+      color: white;
+      padding: 50px 0;
+      text-align: center;
+    }
+
+    .menu-section {
+      padding: 40px 0;
+    }
+
+    .menu-title {
+      border-bottom: 2px solid #e74c3c;
+      display: inline-block;
+      margin-bottom: 30px;
+    }
+
+    .card img {
+      height: 200px;
+      object-fit: cover;
+    }
+
+    footer {
+      background-color: #222;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <div class="menu-header">
+    <h1>La Bella Cucina</h1>
+    <p>Authentic Italian Restaurant</p>
+  </div>
+
+  <div class="container">
+    <!-- Starters -->
+    <div class="menu-section">
+      <h2 class="menu-title">Starters</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?bruschetta" class="card-img-top" alt="Bruschetta">
+            <div class="card-body">
+              <h5 class="card-title">Bruschetta</h5>
+              <p class="card-text">Grilled bread topped with fresh tomatoes, garlic, and basil.</p>
+              <p><strong>$6.99</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?soup" class="card-img-top" alt="Minestrone">
+            <div class="card-body">
+              <h5 class="card-title">Minestrone Soup</h5>
+              <p class="card-text">Classic vegetable soup with beans and pasta.</p>
+              <p><strong>$5.49</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Course -->
+    <div class="menu-section">
+      <h2 class="menu-title">Main Course</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?pizza" class="card-img-top" alt="Pizza Margherita">
+            <div class="card-body">
+              <h5 class="card-title">Pizza Margherita</h5>
+              <p class="card-text">Classic pizza with tomato sauce, mozzarella, and fresh basil.</p>
+              <p><strong>$12.99</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?pasta" class="card-img-top" alt="Fettuccine Alfredo">
+            <div class="card-body">
+              <h5 class="card-title">Fettuccine Alfredo</h5>
+              <p class="card-text">Creamy Alfredo sauce over fettuccine pasta.</p>
+              <p><strong>$11.49</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Desserts -->
+    <div class="menu-section">
+      <h2 class="menu-title">Desserts</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?tiramisu" class="card-img-top" alt="Tiramisu">
+            <div class="card-body">
+              <h5 class="card-title">Tiramisu</h5>
+              <p class="card-text">Layered dessert with mascarpone, espresso, and cocoa.</p>
+              <p><strong>$6.49</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?gelato" class="card-img-top" alt="Gelato">
+            <div class="card-body">
+              <h5 class="card-title">Italian Gelato</h5>
+              <p class="card-text">Rich and creamy artisanal Italian ice cream.</p>
+              <p><strong>$4.99</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beverages -->
+    <div class="menu-section">
+      <h2 class="menu-title">Beverages</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?coffee" class="card-img-top" alt="Espresso">
+            <div class="card-body">
+              <h5 class="card-title">Espresso</h5>
+              <p class="card-text">Strong and bold Italian coffee shot.</p>
+              <p><strong>$2.99</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://source.unsplash.com/400x300/?wine" class="card-img-top" alt="Red Wine">
+            <div class="card-body">
+              <h5 class="card-title">House Red Wine</h5>
+              <p class="card-text">Smooth, full-bodied red wine.</p>
+              <p><strong>$5.99/glass</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 La Bella Cucina. All rights reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

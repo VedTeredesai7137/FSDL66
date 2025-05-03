@@ -1,0 +1,97 @@
+Here is a simple **User Login System** using Node.js and Express with hardcoded credentials. It checks the entered username and password and returns "success" or "failure" based on the input.
+
+### Simple Node.js Login System
+
+1. **Create a new directory** for the project:
+
+   ```bash
+   mkdir login-system
+   cd login-system
+   ```
+
+2. **Initialize the project** and install Express:
+
+   ```bash
+   npm init -y
+   npm install express
+   ```
+
+3. **Create the API file** (`index.js`):
+
+```javascript
+// index.js
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Middleware to parse JSON bodies
+app.use(express.json());
+
+// Hardcoded credentials
+const validCredentials = {
+  username: 'user1',
+  password: 'password123'
+};
+
+// POST endpoint for login
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if credentials match
+  if (username === validCredentials.username && password === validCredentials.password) {
+    return res.json({ message: 'Login Success' });
+  } else {
+    return res.status(401).json({ message: 'Login Failure' });
+  }
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+```
+
+### **Explanation**:
+
+* **Hardcoded Credentials**: The credentials are stored in the `validCredentials` object. The system will check if the `username` and `password` in the request body match the hardcoded values.
+* **POST `/login`**: When the user sends a `POST` request to the `/login` endpoint with a `username` and `password` in the request body, the system checks the credentials and returns a message indicating success or failure.
+* **Error Handling**: If the credentials don't match, it returns a 401 HTTP status with the message `Login Failure`.
+
+### **How to Run**:
+
+1. Create the project folder and add the above `index.js` code.
+
+2. Run the server:
+
+   ```bash
+   node index.js
+   ```
+
+   This will start the server at `http://localhost:3000`.
+
+3. **Test with Postman**:
+
+   * **POST Request**: To log in, make a `POST` request to `http://localhost:3000/login` with a JSON body like:
+
+     ```json
+     {
+       "username": "user1",
+       "password": "password123"
+     }
+     ```
+   * If the credentials are correct, you will receive:
+
+     ```json
+     {
+       "message": "Login Success"
+     }
+     ```
+   * If the credentials are incorrect, you will receive:
+
+     ```json
+     {
+       "message": "Login Failure"
+     }
+     ```
+
+This is a basic **login system** using hardcoded credentials in Node.js/Express. It's a simple mock for learning purposes and can be extended by integrating with a database for real-world usage. Let me know if you want to extend it further!

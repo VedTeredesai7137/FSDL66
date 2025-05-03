@@ -1,0 +1,85 @@
+
+// app.component.ts
+import { Component } from '@angular/core';
+
+interface CartItem {
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  cart: CartItem[] = [];
+  itemName: string = '';
+  itemPrice: number | null = null;
+  itemQuantity: number = 1;
+
+  addItem() {
+    if (this.itemName && this.itemPrice !== null && this.itemPrice > 0) {
+      const existingItem = this.cart.find(item => item.name === this.itemName);
+      if (existingItem) {
+        existingItem.quantity += this.itemQuantity; // Increase quantity if item already in cart
+      } else {
+        this.cart.push({ name: this.itemName, price: this.itemPrice, quantity: this.itemQuantity });
+      }
+      this.itemName = '';
+      this.itemPrice = null;
+      this.itemQuantity = 1;
+    }
+  }
+
+  removeItem(item: CartItem) {
+    this.cart = this.cart.filter(cartItem => cartItem !== item);
+  }
+
+  getTotalPrice(): number {
+    return this.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  }
+}
+<!-- app.component.html -->
+<div style="text-align: center; padding: 20px;">
+    <h1>Shopping Cart</h1>
+  
+    <!-- Input fields to add items -->
+    <input [(ngModel)]="itemName" placeholder="Item Name" style="padding: 10px; margin: 10px;"/>
+    <input [(ngModel)]="itemPrice" type="number" placeholder="Item Price" style="padding: 10px; margin: 10px;" />
+    <input [(ngModel)]="itemQuantity" type="number" placeholder="Quantity" style="padding: 10px; margin: 10px;" />
+  
+    <!-- Button to add item -->
+    <button (click)="addItem()" style="padding: 10px 20px; background-color: #28a745; color: white;">Add to Cart</button>
+  
+    <h2>Cart</h2>
+    <ul>
+      <li *ngFor="let item of cart">
+        {{ item.name }} - ${{ item.price }} x {{ item.quantity }}
+        <button (click)="removeItem(item)" style="padding: 5px 10px; background-color: #dc3545; color: white;">Remove</button>
+      </li>
+    </ul>
+  
+    <h3>Total Price: ${{ getTotalPrice() }}</h3>
+  </div>
+  // app.module.ts
+  import { NgModule } from '@angular/core';
+  import { BrowserModule } from '@angular/platform-browser';
+  import { FormsModule } from '@angular/forms'; // Import FormsModule for two-way data binding
+  
+  import { AppComponent } from './app.component';
+  
+  @NgModule({
+    declarations: [
+      AppComponent
+    ],
+    imports: [
+      BrowserModule,
+      FormsModule  // Import FormsModule for ngModel
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+    

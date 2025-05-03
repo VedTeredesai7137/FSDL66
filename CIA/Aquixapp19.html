@@ -1,0 +1,117 @@
+import { Component } from '@angular/core';
+
+interface Question {
+  questionText: string;
+  options: string[];
+  correctAnswer: string;
+  selectedAnswer: string | null;
+}
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  currentQuestionIndex: number = 0;
+  questions: Question[] = [
+    {
+      questionText: 'What is the capital of France?',
+      options: ['Paris', 'London', 'Rome', 'Berlin'],
+      correctAnswer: 'Paris',
+      selectedAnswer: null
+    },
+    {
+      questionText: 'Which is the largest planet?',
+      options: ['Earth', 'Mars', 'Jupiter', 'Saturn'],
+      correctAnswer: 'Jupiter',
+      selectedAnswer: null
+    },
+    {
+      questionText: 'Which language is primarily used for web development?',
+      options: ['Java', 'Python', 'JavaScript', 'C++'],
+      correctAnswer: 'JavaScript',
+      selectedAnswer: null
+    },
+    {
+      questionText: 'Which is the tallest mountain?',
+      options: ['K2', 'Mount Everest', 'Kangchenjunga', 'Makalu'],
+      correctAnswer: 'Mount Everest',
+      selectedAnswer: null
+    },
+    {
+      questionText: 'What is the currency of Japan?',
+      options: ['Yuan', 'Won', 'Yen', 'Ringgit'],
+      correctAnswer: 'Yen',
+      selectedAnswer: null
+    }
+  ];
+
+  nextQuestion() {
+    if (this.currentQuestionIndex < this.questions.length - 1) {
+      this.currentQuestionIndex++;
+    }
+  }
+
+  previousQuestion() {
+    if (this.currentQuestionIndex > 0) {
+      this.currentQuestionIndex--;
+    }
+  }
+
+  submitQuiz() {
+    let score = 0;
+    this.questions.forEach(question => {
+      if (question.selectedAnswer === question.correctAnswer) {
+        score++;
+      }
+    });
+    alert(`Your score is: ${score} / 5`);
+  }
+}
+<div style="text-align: center; padding: 20px;">
+    <h1>Angular Quiz App</h1>
+    <div *ngIf="currentQuestionIndex < questions.length; else results">
+      <h2>Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}</h2>
+      <p>{{ questions[currentQuestionIndex].questionText }}</p>
+  
+      <div *ngFor="let option of questions[currentQuestionIndex].options">
+        <label>
+          <input type="radio" 
+                 name="answer" 
+                 [value]="option"
+                 [(ngModel)]="questions[currentQuestionIndex].selectedAnswer" />
+          {{ option }}
+        </label>
+      </div>
+  
+      <div style="margin-top: 20px;">
+        <button (click)="previousQuestion()" [disabled]="currentQuestionIndex === 0">Previous</button>
+        <button (click)="nextQuestion()" [disabled]="currentQuestionIndex === questions.length - 1">Next</button>
+      </div>
+    </div>
+  
+    <ng-template #results>
+      <h2>Quiz Completed!</h2>
+      <button (click)="submitQuiz()">Submit Quiz</button>
+    </ng-template>
+  </div>
+  import { NgModule } from '@angular/core';
+  import { BrowserModule } from '@angular/platform-browser';
+  import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel
+  
+  import { AppComponent } from './app.component';
+  
+  @NgModule({
+    declarations: [
+      AppComponent
+    ],
+    imports: [
+      BrowserModule,
+      FormsModule  // Add FormsModule here
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+  })
+  export class AppModule { }
+    

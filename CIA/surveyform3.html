@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Survey Form</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background: white;
+      padding: 30px 40px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    .radio-group {
+      margin-bottom: 20px;
+    }
+
+    .radio-group label {
+      font-weight: normal;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input[type="radio"] {
+      margin-right: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Website Feedback Survey</h2>
+    <form action="#" method="post">
+      <!-- Name -->
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+      <!-- Email -->
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+      <!-- Age -->
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" placeholder="Your age" min="10" max="100" required>
+
+      <!-- Preferences -->
+      <label for="preference">What do you prefer most?</label>
+      <select id="preference" name="preference" required>
+        <option value="">-- Select an option --</option>
+        <option value="design">Design</option>
+        <option value="usability">Usability</option>
+        <option value="speed">Speed</option>
+        <option value="content">Content</option>
+        <option value="features">Features</option>
+      </select>
+
+      <!-- Rating -->
+      <label>How would you rate your experience?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="rating" value="excellent" required> Excellent</label>
+        <label><input type="radio" name="rating" value="good"> Good</label>
+        <label><input type="radio" name="rating" value="average"> Average</label>
+        <label><input type="radio" name="rating" value="poor"> Poor</label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit">Submit Survey</button>
+    </form>
+  </div>
+
+  <footer>
+    &copy; 2025 Survey Inc. All rights reserved.
+  </footer>
+</body>
+</html>
