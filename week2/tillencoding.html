@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Concepts Visualizer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Playfair+Display:wght@700&family=Source+Code+Pro&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0a21;
+            color: #e5e7eb;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+
+        .container {
+            display: grid;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #1a2035;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .card-header {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #d1d5db;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #374151;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-body {
+            font-size: 1rem;
+        }
+
+        .ml-theory {
+            color: #87ceeb;
+            font-weight: bold;
+        }
+
+        .code-snippet {
+            font-family: 'Source Code Pro', monospace;
+            background-color: #0f172a;
+            color: #32cd32;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            display: block;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 0.9rem;
+        }
+
+        .highlight-takeaway {
+            color: #fdbd0a;
+            font-weight: 700;
+        }
+
+        .icon {
+            font-size: 1.5rem;
+            color: #fdbd0a;
+            margin-right: 0.5rem;
+            display: inline-block;
+        }
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .collapsible-content.expanded {
+            max-height: 2000px;
+            transition: max-height 0.5s ease-in;
+        }
+        .toggle-button {
+            cursor: pointer;
+            color: #fdbd0a;
+            font-weight: bold;
+            text-decoration: underline;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        .subsection {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #374151;
+        }
+
+        .workflow-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .workflow-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .workflow-list li:before {
+            content: "▶";
+            color: #fdbd0a;
+            position: absolute;
+            left: 0;
+        }
+
+        .comparison-table {
+            background-color: #0f172a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .comparison-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid #374151;
+        }
+
+        .comparison-table th {
+            color: #fdbd0a;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+    <div class="container mx-auto p-4 md:p-8">
+        <h1 class="text-3xl md:text-5xl font-bold font-['Playfair_Display'] text-center mb-10 text-gray-100">Data Preprocessing Concepts</h1>
+        
+        <!-- Univariate Analysis Block -->
+        <div class="card md:col-span-2">
+            <div class="card-header flex items-center">
+                <span class="icon">⚙</span> Univariate Analysis
+            </div>
+            <div class="content-body">
+    <p>
+        <span class="ml-theory">Univariate Analysis (Day 20)</span> — deep, column-by-column detective work aimed at understanding distribution, central tendency, spread, and outliers for one variable at a time.
+    </p>
+    <p>
+        <span class="highlight-takeaway">Why plotting matters (vi.a):</span> Numbers hide shape. A mean/median only summarizes; plots show skew, multimodality, gaps, and data entry errors. Use visuals first, stats second.
+    </p>
+
+    <div class="subsection">
+        <h4 class="text-lg font-semibold text-gray-300 mb-2">Categorical Analysis (vi.b)</h4>
+        <p>
+            When the variable is categorical (Sex, Pclass, Embarked, survived binary), it shows counts, imbalanced classes, and missing values using countplot, frequency, and percentages.
+        </p>
+        <span class="code-snippet">import seaborn as sns, matplotlib.pyplot as plt
+sns.countplot(data=df, x='Pclass', order=sorted(df['Pclass'].unique()))
+plt.title('Count by Pclass'); plt.show()
+
+# percentage table
+pct = df['Pclass'].value_counts(normalize=True)*100
+print(pct)</span>
+        <p class="mt-2"><strong>Titanic example:</strong> df['Sex'].value_counts(normalize=True)*100 → % male/female.</p>
+    </div>
+
+    <div class="subsection">
+        <h4 class="text-lg font-semibold text-gray-300 mb-2">Continuous Distributions (vi.d)</h4>
+        <p>
+            When dealing with numeric variables (Age, Fare), use histplot/displot to find skew, multi-peaks, and gaps.
+        </p>
+        <span class="code-snippet">sns.displot(df['Age'].dropna(), kde=True, bins=30)
+plt.title('Age distribution (with KDE)'); plt.show()</span>
+        <p>If you care about probability of exactly age 40, use density or discrete binning. But exact ages are often integer; probability of a single value is ~0.</p>
+    </div>
+
+    <div class="subsection">
+        <h4 class="text-lg font-semibold text-gray-300 mb-2">Boxplots for Outliers/Noise (vi.e)</h4>
+        <p>
+            Spot extreme points and compare groups.
+        </p>
+        <span class="code-snippet">sns.boxplot(x='Pclass', y='Fare', data=df)
+plt.title('Fare by class'); plt.show()</span>
+        <p>Use IQR rule to flag outliers. If many “outliers” exist, consider log transform or winsorization.</p>
+    </div>
+
+    <div class="subsection">
+        <h4 class="text-lg font-semibold text-gray-300 mb-2">Basic Statistics (vi.c)</h4>
+        <span class="code-snippet">df['Fare'].describe()
+df['Fare'].median(), df['Fare'].skew()
+df.skew()</span>
+        <p>Skewness > 1 or < -1 means highly skewed — consider transformation.</p>
+    </div>
+
+    <div class="subsection">
+        <h4 class="text-lg font-semibold text-gray-300 mb-2">When to Use What</h4>
+        <ul class="workflow-list">
+            <li><strong>Small numeric sample (&lt;1k):</strong> Full histogram + KDE is fine.</li>
+            <li><strong>Large continuous (100k+):</strong> Use hexbin/agg hist or sample to avoid overplotting.</li>
+            <li><strong>High-cardinality categorical (&gt;30 distinct):</strong> Show top-k with “Other” aggregated.</li>
+        </ul>
+    </div>
+
+    <div class="subsection">
+        <h4 class="text-lg font-semibold text-gray-300 mb-2">Quick Recipes &amp; Tips</h4>
+        <p>
+            If skew &gt; 1: try <code>np.log1p(x)</code> or <code>sklearn.preprocessing.PowerTransformer(standardize=True)</code> (Yeo-Johnson if zeros/negatives).
+        </p>
+        <p>Missing ages? Plot <code>Age.isna()</code> counts; impute after EDA or use model-based imputation.</p>
+        <p>Don’t treat PassengerId/index as informative — drop it.</p>
+    </div>
+</div>
+</div>
+        <!-- Bivariate & Multivariate Analysis Block -->
+        <div class="card md:col-span-2">
+    <div class="card-header flex items-center">
+        <span class="icon">⚛</span> Bivariate & Multivariate Analysis (Day 21)
+    </div>
+    <div class="content-body">
+        <p>
+            Goal: Find <span class="ml-theory">relationships</span> and conditional patterns between two or more variables. 
+            This includes <strong>numeric–numeric</strong>, <strong>numeric–categorical</strong>, and <strong>categorical–categorical</strong> cases. 
+            Ask both pairwise and higher-order questions.
+        </p>
+
+        <!-- Numeric vs Numeric -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">1. Numeric vs Numeric — Scatter, Correlation, Regression</h4>
+            <p>
+                <span class="ml-theory">Scatterplot:</span> Use when both axes are continuous (e.g., Fare vs Age). Add hue to include a categorical third variable.
+            </p>
+            <span class="code-snippet">
+                sns.scatterplot(data=df, x='Fare', y='Age', hue='Survived', alpha=0.7)
+                plt.show()
+            </span>
+            <p class="mt-2"><strong>When not to use scatter:</strong> For millions of points — use <code>hexbin</code> or sample the data.</p>
+
+            <p class="mt-4">
+                <span class="ml-theory">Correlation matrix & heatmap:</span> Use <span class="highlight-takeaway">correlation heatmaps</span> to see pairwise correlation coefficients.
+            </p>
+            <span class="code-snippet">
+                corr = df[['Age','Fare','SibSp','Parch','Pclass']].corr()
+                sns.heatmap(corr, annot=True, fmt=".2f")
+                plt.show()
+            </span>
+        </div>
+
+        <!-- Numeric vs Categorical -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">2. Numeric vs Categorical — Box / Violin / Point Plots</h4>
+            <p>
+                Compare distributions across groups using boxplots or violin plots.
+            </p>
+            <span class="code-snippet">
+                sns.boxplot(x='Survived', y='Age', data=df)
+                sns.violinplot(x='Pclass', y='Fare', data=df)
+            </span>
+            <p class="mt-2">Use <code>pointplot</code> for mean/CI trends across categories.</p>
+        </div>
+
+        <!-- Categorical vs Categorical -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">3. Categorical vs Categorical — Crosstab & Stacked Bars</h4>
+            <p>
+                Absolute counts can mislead when groups differ in size — use percentages.
+            </p>
+            <span class="code-snippet">
+                pd.crosstab(df['Pclass'], df['Survived'], normalize='index')*100
+                # plotting:
+                (pd.crosstab(df['Pclass'], df['Survived'], normalize='index')*100)
+                .plot(kind='bar', stacked=True)
+            </span>
+            <p class="mt-2"><strong>Example:</strong> “Within each Pclass, what % survived?” → use <code>normalize='index'</code>.</p>
+        </div>
+
+        <!-- Pairplot -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">4. Pairplot & Pairwise Relationships</h4>
+            <p>
+                <span class="ml-theory">Pairplot:</span> Shows scatterplots or histograms for many columns. 
+                Great for small datasets (&lt;5k) to spot clusters/patterns.
+            </p>
+            <span class="code-snippet">
+                sns.pairplot(df[['Age','Fare','Pclass','Survived']], hue='Survived')
+            </span>
+            <p class="mt-2"><strong>Note:</strong> Pairplot does O(n²) plots — slow for many variables.</p>
+        </div>
+
+        <!-- Clustermap -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">5. Clustermap & Hierarchical Relationships</h4>
+            <p>
+                <code>sns.clustermap(corr)</code> groups correlated variables — useful to find variable blocks (e.g., Fare & Pclass cluster together).
+            </p>
+            <span class="code-snippet">
+                sns.clustermap(df.corr(), annot=True)
+            </span>
+            <p class="mt-2">Use when you have many features and want correlation structure visually.</p>
+        </div>
+
+        <!-- Time Series -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">6. Time Series / Lineplot</h4>
+            <p>
+                For chronological data (dates), use lineplot:
+            </p>
+            <span class="code-snippet">
+                df.groupby('date')['cases'].sum().pipe(lambda s: sns.lineplot(x=s.index, y=s.values))
+            </span>
+        </div>
+
+        <!-- Multivariate Techniques -->
+        <div class="subsection">
+            <h4 class="text-lg font-semibold text-gray-300 mb-2">7. Multivariate Techniques Beyond Plotting</h4>
+            <ul class="workflow-list">
+                <li><strong>PCA</strong> — find main axes in high-dimensional numeric data (visualize 2 PCs).</li>
+                <li><strong>t-SNE / UMAP</strong> — visual cluster discovery (use after scaling).</li>
+                <li><strong>Partial correlation / conditional analysis</strong> — tease causation cues, or use stratified group comparisons.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <!-- EDA Workflow Block -->
+        <div class="card md:col-span-1">
+            <div class="card-header flex items-center">
+                <span class="icon">⚠</span> Practical EDA Workflow
+            </div>
+            <div class="content-body">
+                <p>
+                    The recommended workflow is ordered and repeatable:
+                </p>
+                <ul class="workflow-list">
+                    <li><span class="ml-theory">Global:</span> `df.info()`, `df.describe()`, `df.isna().sum()`</li>
+                    <li><span class="ml-theory">Univariate:</span> hist/KDE, countplot, boxplot for each column. Log skewed variables</li>
+                    <li><span class="ml-theory">Bivariate:</span> correlation heatmap, scatter with hue, crosstabs with percentages</li>
+                    <li><span class="ml-theory">Multivariate:</span> pairplot (small), PCA/UMAP (large), clustermap for features</li>
+                </ul>
+                <div class="collapsible-content">
+                    <p class="mt-4">
+                        <strong>Document findings:</strong> what predicts target, missingness patterns, odd distributions, possible feature engineering.
+                    </p>
+                    <p><strong>Iterate</strong> — EDA is questions → answers → more questions.</p>
+                    
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Automated EDA with ydata-profiling</h4>
+                        <p>
+                            You can also use the <code>ydata-profiling</code> library (formerly pandas-profiling) for a one-line EDA report.
+                        </p>
+                        <span class="code-snippet">pip install -U ydata-profiling
+
+from ydata_profiling import ProfileReport
+report = ProfileReport(df, title="Titanic EDA", minimal=False)
+report.to_file("titanic_report.html")</span>
+                        <p class="mt-2">It produces an HTML with overview, variable summaries, correlations, missing values, interactions, and sample rows. For huge datasets, use minimal=True or sampling to avoid expensive computations.</p>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Practical Titanic Examples</h4>
+                        <p><strong>Q: Which Pclass survived more?</strong></p>
+                        <span class="code-snippet">(pd.crosstab(df['Pclass'], df['Survived'], normalize='index')*100).plot(kind='bar', stacked=True)</span>
+                        <p class="mt-2"><em>Takeaway: 1st class survival % >> 3rd class.</em></p>
+
+                        <p class="mt-4"><strong>Q: Is Fare predictive?</strong></p>
+                        <span class="code-snippet">sns.boxplot(x='Survived', y='Fare', data=df)
+sns.scatterplot(x='Fare', y='Age', hue='Survived', data=df)
+# Inspect skew; log transform 
+df['logFare'] = np.log1p(df['Fare'])</span>
+
+                        <p class="mt-4"><strong>Q: Do families survive better?</strong> (engineer FamilySize)</p>
+                        <span class="code-snippet">df['FamilySize'] = df['SibSp'] + df['Parch'] + 1
+sns.pointplot(x='FamilySize', y='Survived', data=df)</span>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Pitfalls & "Tell It Like It Is" Truths</h4>
+                        <ul class="workflow-list">
+                            <li><strong>Correlation ≠ causation.</strong> Plots show association, not cause. Don't over-interpret.</li>
+                            <li><strong>Watch leakage.</strong> Features derived from post-survival info leak the answer.</li>
+                            <li><strong>Overplotting hides patterns.</strong> Subsample or aggregate when too dense.</li>
+                            <li><strong>Query design matters.</strong> Your EDA should ask targeted questions (e.g., "within females, by class, who survived?").</li>
+                            <li><strong>High cardinality</strong> categories need aggregation (top 10 + other).</li>
+                            <li><strong>Profiling reports are not magic.</strong> They speed discovery but won't replace human questions.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="toggle-button" onclick="toggleContent(this)">Show More</div>
+            </div>
+        </div>
+
+        <!-- Standardization vs Normalization Block -->
+        <div class="card md:col-span-1">
+            <div class="card-header flex items-center">
+                <span class="icon">⚜</span> Scaling Data: Standardization vs Normalization
+            </div>
+            <div class="content-body">
+                <p>
+                    <span class="ml-theory">Standardization (Z-score)</span>: Rescales data to have a mean of 0 and a standard deviation of 1. It is crucial for algorithms that rely on distances or gradients.
+                </p>
+                <p>
+                    <span class="ml-theory">Normalization (Min-Max)</span>: Rescales data to a fixed range, usually [0, 1]. It's best for distance-based models and neural networks when outliers are not a major concern.
+                </p>
+                
+                <div class="collapsible-content">
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>Standardization (Z-score)</th>
+                                    <th>Normalization (Min-Max)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Output range</strong></td>
+                                    <td>Mean=0, Std=1 (can have negatives, >1)</td>
+                                    <td>Fixed range (often 0 to 1)</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Handles outliers?</strong></td>
+                                    <td>No, but less sensitive than min-max</td>
+                                    <td>Very sensitive - outliers stretch scale</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>When to use</strong></td>
+                                    <td>Gradient-based models, when features are Gaussian-ish</td>
+                                    <td>Distance-based models or neural nets needing bounded input</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Interpretation</strong></td>
+                                    <td>Units are in "std deviations"</td>
+                                    <td>Units are in proportion of min→max</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">When You MUST Use Scaling</h4>
+                        <p><span class="highlight-takeaway">Scaling-sensitive models:</span></p>
+                        <ul class="workflow-list">
+                            <li>Linear Regression (if you compare coefficients)</li>
+                            <li>Logistic Regression</li>
+                            <li>SVM (Support Vector Machine)</li>
+                            <li>KNN (K-Nearest Neighbors)</li>
+                            <li>K-Means clustering</li>
+                            <li>PCA (Principal Component Analysis)</li>
+                            <li>Neural Networks (often improves convergence speed)</li>
+                        </ul>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">When It's NOT Important (Can Skip)</h4>
+                        <p><span class="highlight-takeaway">Tree-based models:</span></p>
+                        <ul class="workflow-list">
+                            <li>Random Forest</li>
+                            <li>Decision Trees</li>
+                            <li>Gradient Boosting (XGBoost, LightGBM, CatBoost)</li>
+                        </ul>
+                        <p class="mt-2"><strong>Why?</strong> Because these models split data based on thresholds, not on distance or variance. Example: Random Forest only asks "Is Age < 25?" — doesn't care if Age is in years or centimeters.</p>
+                    </div>
+
+                    <p class="mt-4">
+                        <span class="highlight-takeaway">Rule of thumb:</span> If your algorithm uses <strong>distance, variance, or gradient descent</strong>, standardize. If it's <strong>tree-based</strong>, you can skip it.
+                    </p>
+
+                    <span class="code-snippet"># Standardization example
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Normalization example  
+from sklearn.preprocessing import MinMaxScaler
+normalizer = MinMaxScaler(feature_range=(0, 1))
+X_train_norm = normalizer.fit_transform(X_train)
+X_test_norm = normalizer.transform(X_test)</span>
+                </div>
+                <div class="toggle-button" onclick="toggleContent(this)">Show More</div>
+            </div>
+        </div>
+        
+        <!-- Categorical Data Encoding Block -->
+        <div class="card md:col-span-2">
+            <div class="card-header flex items-center">
+                <span class="icon">⚡</span> Encoding Categorical Data
+            </div>
+            <div class="content-body">
+                <p>
+                    Machine learning models require numbers. Encoding converts text categories to numerical values without losing meaning.
+                </p>
+
+                <div class="subsection">
+                    <h4 class="text-lg font-semibold text-gray-300 mb-2">Two Main Types of Categorical Data</h4>
+                    
+                    <div class="mt-4">
+                        <h5 class="font-semibold text-gray-400">A) Ordinal Data</h5>
+                        <p>
+                            <span class="ml-theory">Ordinal Data:</span> Categories with a natural order (e.g., 'Poor' < 'Good' < 'Excellent'). Use <span class="highlight-takeaway">Ordinal Encoding</span> because the order matters.
+                        </p>
+                        <p><strong>Examples:</strong> Grades, Shirt Sizes (S, M, L, XL), Service Quality ratings</p>
+                        <p><strong>When to use:</strong> When order matters and distance between values is meaningful for the model.</p>
+                        <p><strong>Models that benefit:</strong> Regression, Linear Models, Tree-based models (ordering can help splits).</p>
+                    </div>
+
+                    <div class="mt-4">
+                        <h5 class="font-semibold text-gray-400">B) Nominal Data</h5>
+                        <p>
+                            <span class="ml-theory">Nominal Data:</span> Categories with no inherent order (e.g., 'Maharashtra', 'Karnataka', 'Punjab'). Use <span class="highlight-takeaway">One-Hot Encoding</span> because "Punjab" is not "greater" than "Maharashtra".
+                        </p>
+                        <p><strong>Examples:</strong> City Names, Product Categories, Colors</p>
+                        <p><strong>When to use:</strong> When order does not matter.</p>
+                        <p><strong>Works well for:</strong> Logistic Regression, Neural Nets, KNN (distance-based models).</p>
+                        <p><strong>Caution:</strong> Too many categories → high dimensionality (can merge rare ones into "Other").</p>
+                    </div>
+                </div>
+
+                <div class="collapsible-content">
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">Code Examples</h4>
+                        
+                        <h5 class="font-semibold text-gray-400 mt-4">Ordinal Encoding Example</h5>
+                        <span class="code-snippet">from sklearn.preprocessing import OrdinalEncoder
+import pandas as pd
+
+# Example dataset
+df = pd.DataFrame({
+    'Service_Quality': ['Poor', 'Good', 'Excellent', 'Good', 'Poor']
+})
+
+# Define order manually
+encoder = OrdinalEncoder(categories=[['Poor', 'Good', 'Excellent']])
+df['Service_Quality_Encoded'] = encoder.fit_transform(df[['Service_Quality']])
+print(df)
+
+# Output:
+# Service_Quality  Service_Quality_Encoded
+# 0         Poor                     0.0
+# 1         Good                     1.0
+# 2    Excellent                     2.0</span>
+
+                        <h5 class="font-semibold text-gray-400 mt-4">One-Hot Encoding Example</h5>
+                        <span class="code-snippet">import pandas as pd
+
+# Example dataset
+df = pd.DataFrame({
+    'State': ['Maharashtra', 'Punjab', 'Karnataka', 'Punjab', 'Maharashtra']
+})
+
+# One-hot encoding
+df_encoded = pd.get_dummies(df, columns=['State'], drop_first=False)
+print(df_encoded)
+
+# Output:
+#    State_Karnataka  State_Maharashtra  State_Punjab
+# 0                0                  1             0
+# 1                0                  0             1
+# 2                1                  0             0</span>
+                    </div>
+
+                    <div class="subsection">
+                        <h4 class="text-lg font-semibold text-gray-300 mb-2">When to Use Ordinal vs One-Hot</h4>
+                        <div class="comparison-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Situation</th>
+                                        <th>Data Type</th>
+                                        <th>Encoding Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Grades (Poor
